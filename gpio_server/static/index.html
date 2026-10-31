@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GPIO</title>
+<link rel="stylesheet" href="style.css">
+<script src="qrcode.js" defer></script>
+<script src="app.js" defer></script>
+</head>
+<body>
+<header>
+  <h1>GPIO</h1>
+  <span id="status" role="status"></span>
+  <span class="actions">
+    <button id="ble-connect" hidden>Bluetooth</button>
+    <button id="share-open" hidden>Share key</button>
+  </span>
+</header>
+
+<section id="setup" hidden>
+  <h2>Enter key</h2>
+  <p>Paste the key printed by <code>sudo cat /var/lib/gpio-server/key</code>,
+    or scan the QR code from a device that already has it.</p>
+  <form id="key-form">
+    <input id="key-input" autocomplete="off" spellcheck="false" placeholder="64 hex characters">
+    <button>Save</button>
+  </form>
+</section>
+
+<main id="lines"></main>
+
+<dialog id="share">
+  <h2>Share key</h2>
+  <div id="qr"></div>
+  <p>Scan with a phone camera to open this page with the key, or copy it:</p>
+  <code id="key-text"></code>
+  <div class="row">
+    <button id="copy">Copy</button>
+    <button id="forget" class="danger">Forget on this device</button>
+    <button id="share-close">Close</button>
+  </div>
+</dialog>
+
+<template id="line-template">
+  <article class="line">
+    <div class="head">
+      <span class="name"></span>
+      <span class="pin"></span>
+      <input class="label" maxlength="24" placeholder="label" aria-label="label">
+    </div>
+    <div class="busy-note"></div>
+    <div class="controls">
+      <select class="mode" aria-label="mode">
+        <option value="off">off</option>
+        <option value="input">input</option>
+        <option value="output">output</option>
+      </select>
+      <span class="value"></span>
+      <button class="toggle"></button>
+      <span class="pulse">
+        <input class="ms" type="number" min="1" max="10000" value="500" aria-label="pulse length in ms">
+        <button class="pulse-button">Pulse</button>
+      </span>
+      <select class="bias" aria-label="bias">
+        <option value="none">no pull</option>
+        <option value="pull-up">pull-up</option>
+        <option value="pull-down">pull-down</option>
+      </select>
+      <label class="active-low"><input type="checkbox"> active low</label>
+    </div>
+  </article>
+</template>
+</body>
+</html>

@@ -1,0 +1,125 @@
+:root {
+  --bg: #f4f4f1;
+  --card: #ffffff;
+  --text: #1d1d1b;
+  --muted: #6b6b66;
+  --line: #deddd6;
+  --accent: #1f7a4d;
+  --on: #2fae6b;
+  --danger: #b3261e;
+  color-scheme: light dark;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #151614;
+    --card: #1f201d;
+    --text: #ecebe6;
+    --muted: #9a9991;
+    --line: #34352f;
+    --accent: #5fd396;
+    --on: #3ccf7f;
+    --danger: #ff8a80;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  padding: 0 16px 32px;
+  background: var(--bg);
+  color: var(--text);
+  font: 15px/1.4 system-ui, sans-serif;
+}
+
+header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 16px 0;
+}
+
+h1 { margin: 0; font-size: 20px; letter-spacing: 0.04em; }
+h2 { margin: 0 0 8px; font-size: 17px; }
+code { font-family: ui-monospace, monospace; overflow-wrap: anywhere; }
+
+#status { color: var(--muted); flex: 1; min-width: 12em; }
+#status.error { color: var(--danger); }
+.actions { display: flex; gap: 8px; }
+
+button, select, input {
+  font: inherit;
+  color: inherit;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 5px 10px;
+}
+button { cursor: pointer; }
+button:hover:not(:disabled) { border-color: var(--muted); }
+button.danger { color: var(--danger); }
+:disabled { opacity: 0.5; cursor: default; }
+
+#setup, dialog {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 16px;
+  max-width: 34em;
+}
+#key-form { display: flex; gap: 8px; }
+#key-input { flex: 1; min-width: 0; font-family: ui-monospace, monospace; }
+
+dialog::backdrop { background: rgb(0 0 0 / 0.5); }
+#qr svg { display: block; width: min(280px, 100%); height: auto; margin: 0 auto 8px; }
+.row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+#lines {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 10px;
+}
+
+.line {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.line.on { border-left-color: var(--on); }
+.line.busy { opacity: 0.6; }
+
+.head { display: flex; align-items: baseline; gap: 8px; }
+.name { font-weight: 600; font-family: ui-monospace, monospace; }
+.pin { color: var(--muted); font-size: 13px; white-space: nowrap; }
+.label { flex: 1; min-width: 0; border-color: transparent; padding: 2px 6px; }
+.label:hover, .label:focus { border-color: var(--line); }
+.busy-note { color: var(--muted); font-size: 13px; }
+.busy-note:empty { display: none; }
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  margin-top: 8px;
+}
+.pulse { display: inline-flex; gap: 4px; align-items: center; }
+.ms { width: 5.5em; }
+.active-low { color: var(--muted); font-size: 13px; display: inline-flex; gap: 4px; align-items: center; }
+
+.value { font-family: ui-monospace, monospace; font-weight: 600; color: var(--muted); }
+.line.on .value { color: var(--on); }
+.toggle { min-width: 4em; font-weight: 600; }
+.line.on .toggle { background: var(--on); border-color: var(--on); color: #fff; }
+
+/* Show only the controls that matter for the line's mode. */
+.line:not([data-mode="input"]) .value,
+.line:not([data-mode="input"]) .bias,
+.line:not([data-mode="output"]) .toggle,
+.line:not([data-mode="output"]) .pulse,
+.line[data-mode="off"] .active-low { display: none; }

@@ -1,0 +1,21 @@
+[Unit]
+Description=GPIO control over HTTPS and Bluetooth LE
+Wants=bluetooth.service
+After=bluetooth.service network.target
+
+[Service]
+User=gpio-server
+SupplementaryGroups=gpio bluetooth
+WorkingDirectory=/opt/gpio-server
+ExecStart=/usr/bin/python3 -m gpio_server --data-dir /var/lib/gpio-server
+StateDirectory=gpio-server
+StateDirectoryMode=0700
+Restart=on-failure
+
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+
+[Install]
+WantedBy=multi-user.target

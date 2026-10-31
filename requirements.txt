@@ -1,0 +1,8 @@
+# Server (on Raspberry Pi OS: apt install python3-libgpiod python3-cryptography python3-dbus-fast)
+gpiod>=2.2
+cryptography
+dbus-fast
+# gpioctl.py --ble only
+bleak
+# development
+pytest
